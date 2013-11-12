@@ -1,0 +1,19 @@
+{block title}Upload videa{/block}
+
+{block content}
+{form uploadForm class => "form-horizontal"}
+	<div n:inner-foreach="$form->allErrors as $error" class="row">
+		<div class="alert alert-danger">
+			<p>{$error}</p>
+		</div>
+	</div>
+	<div class="input-group">
+		{input file class => "form-control input-lg"}
+		<span class="input-group-btn">
+			<button n:name="sender" class="btn btn-lg btn-primary">
+				<span class="glyphicon glyphicon-upload"></span> {$form["sender"]->control->value}
+			</button>
+		</span>
+	</div>
+{/form}
+{/block}
