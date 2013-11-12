@@ -27,4 +27,10 @@ class HomepagePresenter extends BasePresenter
 		return $form;
 	}
 
+
+
+	public function renderResult($id)
+	{
+	}
+
 }
