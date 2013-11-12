@@ -38,7 +38,7 @@ class UploadForm extends BaseForm
 	{
 		/** @var \Nette\Http\FileUpload $file */
 		$file = $form->values->file;
-		$this->videoDao->save(new Video(sha1(time() . "|" . microtime(TRUE) . "|" . $file->name)));
+		$this->videoDao->save(new Video($file->name, sha1(time() . "|" . microtime(TRUE) . "|" . $file->name)));
 	}
 
 }
