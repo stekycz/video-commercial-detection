@@ -1,5 +1,7 @@
 log/*
-temp/*
+temp/cache/*
+temp/proxies/*
+temp/sessions/*
 vendor/*
 !vendor/others
 
