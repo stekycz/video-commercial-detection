@@ -20,4 +20,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->flashMessage($message, "danger");
 	}
 
+
+
+	protected function warningFlashMessage($message)
+	{
+		$this->flashMessage($message, "warning");
+	}
+
 }

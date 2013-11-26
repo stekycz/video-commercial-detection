@@ -71,6 +71,11 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderResult($id)
 	{
+		if ($this->video->locked) {
+			$this->warningFlashMessage("Video se zpracovává. Zkuste to prosím později.");
+		} elseif ($this->video->processed === NULL) {
+			$this->warningFlashMessage("Video ještě nebylo zpracováno. Zkuste to prosím později.");
+		}
 		$this->template->video = $this->video;
 	}
 

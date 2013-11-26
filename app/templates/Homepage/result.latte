@@ -1,10 +1,13 @@
 {block title}Nalezené reklamy{/block}
 
 {block content}
-	<h2>video.mp4</h2>
-	<ul class="list-group">
+	<h2>{$video->name}</h2>
+	{if $video->processed}
+	<div n:if="count($video->commercials) <= 0" class="alert alert-info">Nebyla nalezena žádná reklama.</div>
+	<ul n:if="count($video->commercials) > 0" class="list-group">
 		<li n:foreach="$video->commercials as $id => $commercial" class="list-group-item alert alert-success">
 			{control commercial-$id}
 		</li>
 	</ul>
+	{/if}
 {/block}
