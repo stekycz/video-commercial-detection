@@ -35,11 +35,22 @@ common:
 			savePath: %wwwDir%/../temp/sessions
 			debugger: on
 
-
 	services:
 		routerFactory: RouterFactory
 		router: @routerFactory::createRouter
 
+		processVideoCommand:
+			class: stekycz\vmw\models\ProcessVideoCommand
+			tags: [kdyby.console.command]
+
+		ffmpeg:
+			class: FFMpeg\FFMpeg
+			factory: FFMpeg\FFMpeg::create
+
+		videoCutRangeConvertor:
+			class: stekycz\vmw\models\VideoCutRangeConvertor(
+				%appDir%/../www/files
+			)
 
 	factories:
 		uploadForm:
