@@ -17,7 +17,7 @@ use Kdyby\Doctrine\Entities\IdentifiedEntity;
  * @property-read string $name
  * @property-read string $filename
  * @property string|NULL $directory
- * @property bool $lock
+ * @property bool $locked
  * @property \DateTime|NULL $processed
  * @property-read \DateTime $created
  * @property-read \stekycz\vmw\models\Commercial[] $commercials
@@ -44,10 +44,10 @@ class Video extends IdentifiedEntity
 	protected $directory;
 
 	/**
-	 * @ORM\Column(type="boolean", name="lock", nullable=false)
+	 * @ORM\Column(type="boolean", name="locked", nullable=false)
 	 * @var bool
 	 */
-	protected $lock = FALSE;
+	protected $locked = FALSE;
 
 	/**
 	 * @ORM\Column(type="datetime", name="processed", nullable=true)

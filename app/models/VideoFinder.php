@@ -41,7 +41,7 @@ class VideoFinder extends Object
 	public function findOldestUnprocessed()
 	{
 		return $this->videoDao->findOneBy(array(
-			"lock" => FALSE,
+			"locked" => FALSE,
 			"processed" => NULL,
 		), array(
 			"created" => "ASC",
