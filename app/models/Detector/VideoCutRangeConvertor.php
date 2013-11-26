@@ -59,7 +59,7 @@ class VideoCutRangeConvertor extends Object
 	 */
 	public function createClip(Video $videoEntity, $frame)
 	{
-		$begin = self::frameToTimeCode(max($frame - (1 * self::FRAMES_PER_SECOND), 0));
+		$begin = self::frameToTimeCode(max($frame - (1 * self::FRAMES_PER_SECOND), 0)); // Move 1s backward
 		$duration = TimeCode::fromSeconds(2);
 
 		$video = $this->ffmpeg->open($this->originalFilePath . "/" . $videoEntity->filename);
@@ -71,7 +71,8 @@ class VideoCutRangeConvertor extends Object
 		$filename = $frame . ".mp4";
 		$video->save($format, $directory . "/" . $filename);
 
-		$commercial = new Commercial($videoEntity, $filename);
+		list($time, $frame) = self::frameToTime($frame);
+		$commercial = new Commercial($videoEntity, $filename, $time, $frame);
 		$this->videoDao->related("commercials")->save($commercial);
 
 		return $commercial;
@@ -95,7 +96,11 @@ class VideoCutRangeConvertor extends Object
 
 
 
-	private static function frameToTimeCode($frame)
+	/**
+	 * @param int $frame
+	 * @return \DateTime
+	 */
+	private static function frameToTime($frame)
 	{
 		$hours = floor($frame / self::FRAMES_PER_HOUR);
 		$frame = $frame % self::FRAMES_PER_HOUR;
@@ -106,7 +111,20 @@ class VideoCutRangeConvertor extends Object
 		$seconds = floor($frame / self::FRAMES_PER_SECOND);
 		$frame = $frame % self::FRAMES_PER_SECOND;
 
-		return new TimeCode($hours, $minutes, $seconds, $frame);
+		$time = new \DateTime();
+		return [
+			$time->setTime($hours, $minutes, $seconds),
+			$frame
+		];
+	}
+
+
+
+	private static function frameToTimeCode($frame)
+	{
+		list($time, $frame) = self::frameToTime($frame);
+
+		return new TimeCode($time->format("H"), $time->format("i"), $time->format("s"), $frame);
 	}
 
 }
