@@ -2,8 +2,10 @@
 
 namespace stekycz\vmw\models\Detector;
 
+use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
+use FFMpeg\Filters\Video\ResizeFilter;
 use FFMpeg\Format\Video\X264;
 use Kdyby\Doctrine\EntityDao;
 use Nette\Object;
@@ -15,6 +17,9 @@ use stekycz\vmw\models\Video;
 
 class VideoCutRangeConvertor extends Object
 {
+
+	const VIDEO_WIDTH = 320;
+	const VIDEO_HEIGHT = 240;
 
 	const FRAMES_PER_SECOND = 25; // 25
 	const FRAMES_PER_MINUTE = 1500; // 25 * 60
@@ -64,6 +69,7 @@ class VideoCutRangeConvertor extends Object
 
 		$video = $this->ffmpeg->open($this->originalFilePath . "/" . $videoEntity->filename);
 
+		$video->filters()->resize(new Dimension(self::VIDEO_WIDTH, self::VIDEO_HEIGHT), ResizeFilter::RESIZEMODE_INSET);
 		$video->addFilter(new ClipFilter($begin, $duration));
 
 		$format = new X264();
