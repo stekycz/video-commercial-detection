@@ -6,6 +6,7 @@ use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\Video\X264;
 use Nette\Object;
+use stekycz\vmw\models\FFMpeg\ClipFilter;
 
 
 
