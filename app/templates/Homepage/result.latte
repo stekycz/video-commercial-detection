@@ -3,77 +3,8 @@
 {block content}
 	<h2>video.mp4</h2>
 	<ul class="list-group">
-		<li class="list-group-item alert alert-success">
-			<div class="row">
-				<div class="col-sm-4">
-					<video width="320" height="240" controls>
-						<source src="{$baseUri}/files/64f05823a65bb3146f5ae6fe987fbebc0b80b3b3/0.mp4" type="video/mp4">
-					</video>
-				</div>
-				<div class="col-sm-8">
-					<h4>Pravděpodobnost <span class="label label-success">75 %</span></h4>
-					<dl class="dl-horizontal col-sm-6">
-						<dt>Dle obrazu:</dt>
-						<dd>50 %</dd>
-						<dt>Dle zvuku:</dt>
-						<dd>87 %</dd>
-					</dl>
-					<dl class="dl-horizontal col-sm-6">
-						<dt>Čas:</dt>
-						<dd>1:25:43</dd>
-						<dt>Frame:</dt>
-						<dd>14/25</dd>
-					</dl>
-				</div>
-			</div>
-		</li>
-		<li class="list-group-item alert alert-warning">
-			<div class="row">
-				<div class="col-sm-4">
-					<video width="320" height="240" controls>
-						<source src="{$baseUri}/files/64f05823a65bb3146f5ae6fe987fbebc0b80b3b3/151.mp4" type="video/mp4">
-					</video>
-				</div>
-				<div class="col-sm-8">
-					<h4>Pravděpodobnost <span class="label label-warning">53 %</span></h4>
-					<dl class="dl-horizontal col-sm-6">
-						<dt>Dle obrazu:</dt>
-						<dd>47 %</dd>
-						<dt>Dle zvuku:</dt>
-						<dd>55 %</dd>
-					</dl>
-					<dl class="dl-horizontal col-sm-6">
-						<dt>Čas:</dt>
-						<dd>1:28:13</dd>
-						<dt>Frame:</dt>
-						<dd>21/25</dd>
-					</dl>
-				</div>
-			</div>
-		</li>
-		<li class="list-group-item alert alert-danger">
-			<div class="row">
-				<div class="col-sm-4">
-					<video width="320" height="240" controls>
-						<source src="{$baseUri}/files/64f05823a65bb3146f5ae6fe987fbebc0b80b3b3/3285.mp4" type="video/mp4">
-					</video>
-				</div>
-				<div class="col-sm-8">
-					<h4>Pravděpodobnost <span class="label label-danger">27 %</span></h4>
-					<dl class="dl-horizontal col-sm-6">
-						<dt>Dle obrazu:</dt>
-						<dd>13 %</dd>
-						<dt>Dle zvuku:</dt>
-						<dd>35 %</dd>
-					</dl>
-					<dl class="dl-horizontal col-sm-6">
-						<dt>Čas:</dt>
-						<dd>1:33:33</dd>
-						<dt>Frame:</dt>
-						<dd>3/25</dd>
-					</dl>
-				</div>
-			</div>
+		<li n:foreach="$files as $id => $filepath" class="list-group-item alert alert-success">
+			{control commercial-$id}
 		</li>
 	</ul>
 {/block}

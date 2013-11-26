@@ -57,6 +57,11 @@ common:
 			class: stekycz\vmw\forms\UploadForm(@doctrine.dao(stekycz\vmw\models\Video))
 			implement: stekycz\vmw\forms\IUploadFormFactory
 
+		commercialControl:
+			class: stekycz\vmw\components\CommercialControl(%filepath%)
+			implement: stekycz\vmw\components\ICommercialControlFactory
+			parameters: [filepath]
+
 
 production < common:
 
