@@ -18,7 +18,8 @@
 		"kdyby/doctrine-cache": "@dev",
 		"kdyby/events": "@dev",
 		"kdyby/validator": "@dev",
-		"kdyby/console": "@dev"
+		"kdyby/console": "@dev",
+		"php-ffmpeg/php-ffmpeg": "0.3.x-dev@dev"
 	},
 	"require-dev": {
 		"nette/tester": "@dev"
