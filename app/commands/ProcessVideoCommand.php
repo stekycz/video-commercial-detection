@@ -41,24 +41,28 @@ class ProcessVideoCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$video = $this->videoFinder->find(1);
-		$videoPath = __DIR__ . "/../../files/" . $video->filename;
+		$video = $this->videoFinder->findOldestUnprocessed();
+		if ($video !== NULL) {
+			$videoPath = __DIR__ . "/../../files/" . $video->filename;
 
-		/** @var \Symfony\Component\Console\Helper\ProgressHelper $progress */
-		$progress = $this->getHelperSet()->get('progress');
-		$progress->setFormat($progress::FORMAT_VERBOSE);
-		$progress->start($output, 3);
+			/** @var \Symfony\Component\Console\Helper\ProgressHelper $progress */
+			$progress = $this->getHelperSet()->get('progress');
+			$progress->setFormat($progress::FORMAT_VERBOSE);
+			$progress->start($output, 3);
 
-		$this->videoCutRangeConvertor->createRangeVideo($videoPath, 0);
-		$progress->advance();
-		$this->videoCutRangeConvertor->createRangeVideo($videoPath, 151);
-		$progress->advance();
-		$this->videoCutRangeConvertor->createRangeVideo($videoPath, 3285);
-		$progress->advance();
+			$this->videoCutRangeConvertor->createRangeVideo($videoPath, 0);
+			$progress->advance();
+			$this->videoCutRangeConvertor->createRangeVideo($videoPath, 151);
+			$progress->advance();
+			$this->videoCutRangeConvertor->createRangeVideo($videoPath, 3285);
+			$progress->advance();
 
-		$progress->finish();
+			$progress->finish();
 
-		$output->writeln("<info>Video process finished</info>");
+			$output->writeln("<info>Video process finished</info>");
+		} else {
+			$output->writeln("<comment>No video found to be processed</comment>");
+		}
 
 		return 0;
 	}
