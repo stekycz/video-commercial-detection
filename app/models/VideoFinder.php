@@ -1,6 +1,6 @@
 <?php
 
-namespace stekycz;
+namespace stekycz\vmw\models;
 
 use Kdyby\Doctrine\EntityDao;
 use Nette\Object;
@@ -26,11 +26,39 @@ class VideoFinder extends Object
 
 	/**
 	 * @param int $id
-	 * @return \stekycz\vmw\models\Video
+	 * @return \stekycz\vmw\models\Video|NULL
 	 */
 	public function find($id)
 	{
 		return $this->videoDao->find($id);
+	}
+
+
+
+	/**
+	 * @return \stekycz\vmw\models\Video|NULL
+	 */
+	public function findOldestUnprocessed()
+	{
+		return $this->videoDao->findOneBy(array(
+			"lock" => FALSE,
+			"processed" => NULL,
+		), array(
+			"created" => "ASC",
+		));
+	}
+
+
+
+	/**
+	 * @param \stekycz\vmw\models\Video $video
+	 * @return \stekycz\vmw\models\VideoFinder
+	 */
+	public function save(Video $video)
+	{
+		$this->videoDao->save($video);
+
+		return $this;
 	}
 
 }

@@ -62,6 +62,9 @@ class HomepagePresenter extends BasePresenter
 	public function actionResult($id)
 	{
 		$this->video = $this->videoFinder->find($id);
+		if ($this->video === NULL) {
+			$this->error("Video with ID '$id' was not found.");
+		}
 	}
 
 
