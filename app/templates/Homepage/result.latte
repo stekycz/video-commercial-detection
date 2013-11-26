@@ -5,7 +5,7 @@
 	{if $video->processed}
 	<div n:if="count($video->commercials) <= 0" class="alert alert-info">Nebyla nalezena žádná reklama.</div>
 	<ul n:if="count($video->commercials) > 0" class="list-group">
-		<li n:foreach="$video->commercials as $id => $commercial" class="list-group-item alert alert-success">
+		<li n:foreach="$video->commercials as $id => $commercial" class="list-group-item">
 			{control commercial-$id}
 		</li>
 	</ul>
