@@ -15,6 +15,7 @@ use Kdyby\Doctrine\Entities\IdentifiedEntity;
  * @property-read string $name
  * @property-read string $filename
  * @property string|NULL $directory
+ * @property-read \stekycz\vmw\models\Commercial[] $commercials
  */
 class Video extends IdentifiedEntity
 {
@@ -38,7 +39,7 @@ class Video extends IdentifiedEntity
 	protected $directory;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="\stekycz\vmw\models\Commercial", mappedBy="video", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="\stekycz\vmw\models\Commercial", indexBy="id", mappedBy="video", cascade={"persist", "remove"})
 	 * @var \stekycz\vmw\models\Commercial[]|\Doctrine\Common\Collections\Collection
 	 */
 	private $commercials;

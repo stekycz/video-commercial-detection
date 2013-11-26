@@ -9,11 +9,18 @@ use Nette\Application\UI\Multiplier;
 class HomepagePresenter extends BasePresenter
 {
 
-	private static $files = array(
-		0 => "64f05823a65bb3146f5ae6fe987fbebc0b80b3b3/0.mp4",
-		151 => "64f05823a65bb3146f5ae6fe987fbebc0b80b3b3/151.mp4",
-		3285 => "64f05823a65bb3146f5ae6fe987fbebc0b80b3b3/3285.mp4",
-	);
+	/**
+	 * @var \Kdyby\Doctrine\EntityDao
+	 * @autowire(class="stekycz\vmw\models\Video", factory="Kdyby\Doctrine\EntityDaoFactory")
+	 */
+	protected $videoDao;
+
+	/**
+	 * @var \stekycz\vmw\models\Video|NULL
+	 */
+	private $video;
+
+
 
 	public function renderDefault()
 	{
@@ -44,7 +51,7 @@ class HomepagePresenter extends BasePresenter
 	protected function createComponentCommercial(ICommercialControlFactory $factory)
 	{
 		$control = new Multiplier(function ($id) use ($factory) {
-			return $factory->create(self::$files[$id]);
+			return $factory->create($this->video->commercials[$id]);
 		});
 
 		return $control;
@@ -52,9 +59,16 @@ class HomepagePresenter extends BasePresenter
 
 
 
+	public function actionResult($id)
+	{
+		$this->video = $this->videoDao->find($id);
+	}
+
+
+
 	public function renderResult($id)
 	{
-		$this->template->files = self::$files;
+		$this->template->video = $this->video;
 	}
 
 }

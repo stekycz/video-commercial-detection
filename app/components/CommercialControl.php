@@ -2,26 +2,28 @@
 
 namespace stekycz\vmw\components;
 
+use stekycz\vmw\models\Commercial;
+
 
 
 class CommercialControl extends BaseControl
 {
 
-	private $filepath;
+	private $commercial;
 
 
 
-	public function __construct($filepath)
+	public function __construct(Commercial $commercial)
 	{
 		parent::__construct();
-		$this->filepath = $filepath;
+		$this->commercial = $commercial;
 	}
 
 
 
 	public function render()
 	{
-		$this->template->filepath = $this->filepath;
+		$this->template->commercial = $this->commercial;
 
 		$this->template->setFile(__DIR__ . "/commercial-control.latte");
 		$this->template->render();
@@ -35,9 +37,9 @@ interface ICommercialControlFactory
 {
 
 	/**
-	 * @param string $filepath
+	 * @param \stekycz\vmw\models\Commercial $commercial
 	 * @return \stekycz\vmw\components\CommercialControl
 	 */
-	public function create($filepath);
+	public function create(Commercial $commercial);
 
 }

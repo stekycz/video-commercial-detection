@@ -58,9 +58,9 @@ common:
 			implement: stekycz\vmw\forms\IUploadFormFactory
 
 		commercialControl:
-			class: stekycz\vmw\components\CommercialControl(%filepath%)
+			class: stekycz\vmw\components\CommercialControl(%commercial%)
 			implement: stekycz\vmw\components\ICommercialControlFactory
-			parameters: [filepath]
+			parameters: [stekycz\vmw\models\Commercial commercial]
 
 
 production < common:

@@ -3,7 +3,7 @@
 {block content}
 	<h2>video.mp4</h2>
 	<ul class="list-group">
-		<li n:foreach="$files as $id => $filepath" class="list-group-item alert alert-success">
+		<li n:foreach="$video->commercials as $id => $commercial" class="list-group-item alert alert-success">
 			{control commercial-$id}
 		</li>
 	</ul>
