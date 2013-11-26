@@ -1,4 +1,5 @@
 log/*
+temp/*.dat
 temp/cache/*
 temp/proxies/*
 temp/sessions/*
