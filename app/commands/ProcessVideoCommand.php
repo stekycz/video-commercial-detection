@@ -16,6 +16,11 @@ class ProcessVideoCommand extends Command
 	 */
 	private $videoCutRangeConvertor;
 
+	/**
+	 * @var \stekycz\vmw\models\VideoFinder
+	 */
+	private $videoFinder;
+
 
 
 	protected function configure()
@@ -29,13 +34,15 @@ class ProcessVideoCommand extends Command
 	protected function initialize(InputInterface $input, OutputInterface $output)
 	{
 		$this->videoCutRangeConvertor = $this->getHelper('container')->getByType('stekycz\vmw\models\VideoCutRangeConvertor');
+		$this->videoFinder = $this->getHelper('container')->getByType('stekycz\vmw\models\VideoFinder');
 	}
 
 
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$videoPath = __DIR__ . "/../../files/video.mp4";
+		$video = $this->videoFinder->find(1);
+		$videoPath = __DIR__ . "/../../files/" . $video->filename;
 
 		/** @var \Symfony\Component\Console\Helper\ProgressHelper $progress */
 		$progress = $this->getHelperSet()->get('progress');

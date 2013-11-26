@@ -10,10 +10,10 @@ class HomepagePresenter extends BasePresenter
 {
 
 	/**
-	 * @var \Kdyby\Doctrine\EntityDao
-	 * @autowire(class="stekycz\vmw\models\Video", factory="Kdyby\Doctrine\EntityDaoFactory")
+	 * @var \stekycz\vmw\models\VideoFinder
+	 * @autowire
 	 */
-	protected $videoDao;
+	protected $videoFinder;
 
 	/**
 	 * @var \stekycz\vmw\models\Video|NULL
@@ -61,7 +61,7 @@ class HomepagePresenter extends BasePresenter
 
 	public function actionResult($id)
 	{
-		$this->video = $this->videoDao->find($id);
+		$this->video = $this->videoFinder->find($id);
 	}
 
 

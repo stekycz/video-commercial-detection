@@ -1,6 +1,6 @@
 <?php
 
-namespace stekycz\vmw\models;
+namespace stekycz\vmw\models\FFMpeg;
 
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Filters\Video\VideoFilterInterface;

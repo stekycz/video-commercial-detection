@@ -52,6 +52,9 @@ common:
 				%appDir%/../www/files
 			)
 
+		videoFinder:
+			class: stekycz\vmw\models\VideoFinder(@doctrine.dao(stekycz\vmw\models\Video))
+
 	factories:
 		uploadForm:
 			class: stekycz\vmw\forms\UploadForm(@doctrine.dao(stekycz\vmw\models\Video))
