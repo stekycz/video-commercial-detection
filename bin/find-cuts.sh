@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEMP_DIR=$(pwd)
+TEMP_DIR=$3
 
 ffmpeg -r 25 -i $1 -an -sn -vcodec mjpeg -f avi $TEMP_DIR/test.avi
 
