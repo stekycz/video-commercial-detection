@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "add973a77dc70953abc4740564c10b4e",
+    "hash": "ab8802770183eb44a9d9fca45cb35926",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1177,12 +1177,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "4df0e7dce4a4f2bdfa1b47ea0da6b43e7d6a7e99"
+                "reference": "3e95c8c89bd0181b2f14ca9eaaf8c51f760b067d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/4df0e7dce4a4f2bdfa1b47ea0da6b43e7d6a7e99",
-                "reference": "4df0e7dce4a4f2bdfa1b47ea0da6b43e7d6a7e99",
+                "url": "https://api.github.com/repos/nette/nette/zipball/3e95c8c89bd0181b2f14ca9eaaf8c51f760b067d",
+                "reference": "3e95c8c89bd0181b2f14ca9eaaf8c51f760b067d",
                 "shasum": ""
             },
             "require": {
@@ -1243,7 +1243,7 @@
                 "neon",
                 "templating"
             ],
-            "time": "2013-11-26 17:13:48"
+            "time": "2013-11-26 21:03:13"
         },
         {
             "name": "neutron/temporary-filesystem",

@@ -19,7 +19,8 @@
 		"kdyby/events": "@dev",
 		"kdyby/validator": "@dev",
 		"kdyby/console": "@dev",
-		"php-ffmpeg/php-ffmpeg": "0.3.x-dev@dev"
+		"php-ffmpeg/php-ffmpeg": "0.3.x-dev@dev",
+		"alchemy/binary-driver": "~1.5"
 	},
 	"require-dev": {
 		"nette/tester": "@dev"
