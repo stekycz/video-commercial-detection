@@ -14,11 +14,6 @@ use Psr\Log\LoggerInterface;
 class FindCutsDriver extends AbstractBinary
 {
 
-	/**
-	 * Returns the name of the driver
-	 *
-	 * @return string
-	 */
 	public function getName()
 	{
 		return "find-cuts.sh";
@@ -26,14 +21,6 @@ class FindCutsDriver extends AbstractBinary
 
 
 
-	/**
-	 * Creates an FFMpegDriver.
-	 *
-	 * @param LoggerInterface $logger
-	 * @param array|Configuration $configuration
-	 *
-	 * @return FFMpegDriver
-	 */
 	public static function create(LoggerInterface $logger = NULL, $configuration = array())
 	{
 		if (!$configuration instanceof ConfigurationInterface) {

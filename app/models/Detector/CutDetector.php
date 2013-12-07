@@ -2,10 +2,8 @@
 
 namespace stekycz\vmw\models\Detector;
 
-use Alchemy\BinaryDriver\Configuration;
-use Alchemy\BinaryDriver\ProcessBuilderFactory;
-use Monolog\Logger;
 use Nette\Object;
+use Nette\Utils\Strings;
 use stekycz\Binaries\FindCutsDriver;
 use stekycz\vmw\models\Video;
 
@@ -20,14 +18,28 @@ class CutDetector extends Object
 	 */
 	public function detectScenes(Video $video)
 	{
+		$cutsFilename = __DIR__ . "/../../../temp/scenes/" . $video->filename . ".cuts.txt";
 		$driver = FindCutsDriver::create();
 		$driver->command([
 			__DIR__ . "/../../../files/" . $video->filename,
-			__DIR__ . "/../../../temp/scenes/" . $video->filename . ".cuts.txt",
+			$cutsFilename,
 			__DIR__ . "/../../../temp/scenes"
 		]);
 
-		return [0, 151, 3285]; // TODO
+		$output = file_get_contents($cutsFilename);
+		if ($output === FALSE) {
+			@unlink($cutsFilename);
+			return [];
+		}
+		@unlink($cutsFilename);
+
+		$frames = [];
+		foreach (array_slice(Strings::split($output, '/\n/'), 4) as $line) {
+			$parts = Strings::split($line, '/\s+/');
+			$frames[] = (int) $parts[1];
+		}
+
+		return $frames;
 	}
 
 }
