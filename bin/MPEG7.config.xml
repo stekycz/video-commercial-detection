@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config xmlns="http://mpeg7audioenc.sf.net/mpeg7audioenc.xsd"
+  xmlns:mp7ae="http://mpeg7audioenc.sf.net/mpeg7audioenc.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://mpeg7audioenc.sf.net/mpeg7audioenc.xsd http://mpeg7audioenc.sf.net/mpeg7audioenc.xsd">
+	<Module xsi:type="Resizer">
+		<HopSize>40</HopSize>
+	</Module>
+	<Module xsi:type="AudioPower" mp7ae:enable="true" />
+	<!--
+	<Module xsi:type="AudioSpectrumCentroidSpread" mp7ae:enable="true" />
+	<Module xsi:type="AudioWaveform" mp7ae:enable="true" />
+	-->
+</Config>
