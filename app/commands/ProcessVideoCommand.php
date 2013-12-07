@@ -60,7 +60,7 @@ class ProcessVideoCommand extends Command
 			$this->videoFinder->save($video);
 
 			$cutFrameNumbers = $this->cutDetector->detectScenes($video);
-			$commercials = $this->commercialDetector->detectPossibleCommercials($cutFrameNumbers);
+			$commercials = $this->commercialDetector->detectPossibleCommercials($video, $cutFrameNumbers);
 
 			/** @var \Symfony\Component\Console\Helper\ProgressHelper $progress */
 			$progress = $this->getHelperSet()->get('progress');
