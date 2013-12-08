@@ -56,27 +56,39 @@ class ProcessVideoCommand extends Command
 	{
 		$video = $this->videoFinder->findOldestUnprocessed();
 		if ($video !== NULL) {
-			$video->locked = TRUE;
-			$this->videoFinder->save($video);
+			try {
+				$video->locked = TRUE;
+				$this->videoFinder->save($video);
 
-			$cutFrameNumbers = $this->cutDetector->detectScenes($video);
-			$commercials = $this->commercialDetector->detectPossibleCommercials($video, $cutFrameNumbers);
+				$output->writeln("Begin detection of scene cuts...");
+				$cutFrameNumbers = $this->cutDetector->detectScenes($video);
+				$output->writeln("Finished detection of scene cuts...");
 
-			/** @var \Symfony\Component\Console\Helper\ProgressHelper $progress */
-			$progress = $this->getHelperSet()->get('progress');
-			$progress->setFormat($progress::FORMAT_VERBOSE);
-			$progress->start($output, count($commercials));
+				$output->writeln("Begin detection of possible commercials...");
+				$commercials = $this->commercialDetector->detectPossibleCommercials($video, $cutFrameNumbers);
+				$output->writeln("Finished detection of possible commercials...");
 
-			foreach ($commercials as $frame) {
-				$this->videoCutRangeConvertor->createClip($video, $frame);
-				$progress->advance();
+				$output->writeln("Begin generation of detected commercial cuts...");
+				/** @var \Symfony\Component\Console\Helper\ProgressHelper $progress */
+				$progress = $this->getHelperSet()->get('progress');
+				$progress->setFormat($progress::FORMAT_VERBOSE);
+				$progress->start($output, count($commercials));
+
+				foreach ($commercials as $frame) {
+					$this->videoCutRangeConvertor->createClip($video, $frame);
+					$progress->advance();
+				}
+
+				$progress->finish();
+				$output->writeln("Finished generation of detected commercial cuts...");
+
+				$video->processed = new \DateTime();
+			} catch (\Exception $e) {
+				throw $e;
+			} finally {
+				$video->locked = FALSE;
+				$this->videoFinder->save($video);
 			}
-
-			$progress->finish();
-
-			$video->locked = FALSE;
-			$video->processed = new \DateTime();
-			$this->videoFinder->save($video);
 
 			$output->writeln("<info>Video process finished</info>");
 		} else {
