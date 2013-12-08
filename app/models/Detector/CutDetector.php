@@ -35,8 +35,9 @@ class CutDetector extends Object
 
 		$frames = [];
 		foreach (array_slice(Strings::split($output, '/\n/'), 4) as $line) {
-			$parts = Strings::split($line, '/\s+/');
-			$frames[] = (int) $parts[1];
+			if ($matches = Strings::match($line, '/^(\d+)\s+(\d+)\s+(\d+).*$/')) {
+				$frames[] = (int) $matches[2];
+			}
 		}
 
 		return $frames;

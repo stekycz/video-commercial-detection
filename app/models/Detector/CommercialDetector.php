@@ -15,8 +15,6 @@ class CommercialDetector extends Object
 
 	const MIN_IMPORTANT_CUT_DELAY = 25; // 1 second in frames
 
-	const DIFFERENCE_LEVEL = 2;
-
 	/**
 	 * @param \stekycz\vmw\models\Video $video
 	 * @param int[] $cutFrameNumbers
@@ -40,8 +38,10 @@ class CommercialDetector extends Object
 			$mpeg7outputFile,
 		]);
 
+		@unlink($audioFile);
+
 		$xml = new \SimpleXMLElement($mpeg7outputFile, 0, TRUE);
-		$dataElements = (array) $xml->xpath("//AudioDescriptor[xsi:type='AudioPowerType']/SeriesOfScalar/Raw");
+		$dataElements = (array) $xml->xpath("//mpeg7:Description/mpeg7:MultimediaContent/mpeg7:Audio/mpeg7:AudioDescriptor/mpeg7:SeriesOfScalar/mpeg7:Raw");
 		$valuesByFrames = [];
 		foreach ($dataElements as $el) {
 			foreach (Strings::split((string) $el, '/\s+/') as $value) {
@@ -49,9 +49,11 @@ class CommercialDetector extends Object
 			}
 		}
 
+		@unlink($mpeg7outputFile);
+
 		$commercialFrames = [];
-		foreach ($valuesByFrames as $frame => $value) {
-			if (abs(self::avg(array_slice($valuesByFrames, $frame - 6, 5)) - self::avg(array_slice($valuesByFrames, $frame, 5))) >= self::DIFFERENCE_LEVEL) {
+		foreach ($cutFrameNumbers as $frame) {
+			if (self::isCommercial($valuesByFrames, $frame)) {
 				$commercialFrames[] = $frame;
 			}
 		}
@@ -61,9 +63,53 @@ class CommercialDetector extends Object
 
 
 
+	private static function isCommercial(array $valuesByFrames, $frame)
+	{
+		$isChange = TRUE;
+
+		$beforeAvg = self::avg(array_slice($valuesByFrames, $frame - 26, 25));
+		$afterAvg = self::avg(array_slice($valuesByFrames, $frame, 25));
+		$difference = abs($beforeAvg - $afterAvg);
+		dlog($frame, $beforeAvg, $afterAvg);
+		$isChange = $isChange && (
+				($beforeAvg >= 0.0005 && $beforeAvg <= 0.003)
+				|| ($afterAvg >= 0.0005 && $afterAvg <= 0.003)
+			) && $difference <= 0.0014 && $difference >= 0.0010;
+
+		return $isChange;
+	}
+
+
+
+	private static function min(array $values)
+	{
+		return array_reduce($values, function ($sum, $value) {
+			return $sum > $value ? $value : $sum;
+		}, PHP_INT_MAX);
+	}
+
+
+
+	private static function max(array $values)
+	{
+		return array_reduce($values, function ($sum, $value) {
+			return $sum < $value ? $value : $sum;
+		}, -1);
+	}
+
+
+
 	private static function avg(array $values)
 	{
 		return array_sum($values) / count($values);
+	}
+
+
+
+	private static function mean(array $values)
+	{
+		sort($values, SORT_NUMERIC);
+		return $values[(int) floor(count($values) / 2)];
 	}
 
 
